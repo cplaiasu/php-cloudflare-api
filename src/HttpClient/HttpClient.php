@@ -63,7 +63,7 @@ class HttpClient
                 'X-Auth-Key' => $key,
                 'User-Agent' => 'php-cloudflare-api (https://github.com/cplaiasu/php-cloudflare-api)'
             ],
-        }
+        };
 
         $this->client = new Client([
             'stack' => $stack,
