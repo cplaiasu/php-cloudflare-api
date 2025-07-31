@@ -41,7 +41,7 @@ class HttpClient
      * @return void
      */
     public function __construct(
-        string $use = 'token',
+        string $use,
         string $token,
         string $email = '',
         string $key = '',
