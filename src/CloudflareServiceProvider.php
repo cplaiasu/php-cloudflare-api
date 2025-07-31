@@ -55,7 +55,7 @@ class CloudflareServiceProvider extends ServiceProvider
     private function registerCloudflare(): void
     {
         $this->app->singleton('cloudflare', function (Container $app): Client {
-            return new Client(config('cloudflare.token'));
+            return new Client(config('cloudflare.use'), config('cloudflare.token'), config('cloudflare.email'), config('cloudflare.key'));
         });
 
         $this->app->alias('cloudflare', Client::class);

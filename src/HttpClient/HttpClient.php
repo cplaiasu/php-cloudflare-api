@@ -41,7 +41,10 @@ class HttpClient
      * @return void
      */
     public function __construct(
+        string $use = 'token',
         string $token,
+        string $email = '',
+        string $key = '',
         array $middlewares = []
     ) {
 
@@ -50,14 +53,22 @@ class HttpClient
         foreach ($middlewares as $middleware) {
             $stack->push($middleware);
         }
+        $headers = match ($use) {
+            'token' => [
+                'Authorization' => "Bearer {$token}",
+                'User-Agent' => 'php-cloudflare-api (https://github.com/SergkeiM/php-cloudflare-api)'
+            ],
+            'key' => [
+                'X-Auth-Email' => $email,
+                'X-Auth-Key' => $key,
+                'User-Agent' => 'php-cloudflare-api (https://github.com/cplaiasu/php-cloudflare-api)'
+            ],
+        }
 
         $this->client = new Client([
             'stack' => $stack,
             RequestOptions::HTTP_ERRORS => false,
-            RequestOptions::HEADERS => [
-                'Authorization' => "Bearer {$token}",
-                'User-Agent' => 'php-cloudflare-api (https://github.com/SergkeiM/php-cloudflare-api)'
-            ],
+            RequestOptions::HEADERS => $headers,
             RequestOptions::CONNECT_TIMEOUT => 10,
             RequestOptions::CRYPTO_METHOD => STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT,
             RequestOptions::TIMEOUT => 30

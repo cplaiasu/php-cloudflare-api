@@ -35,11 +35,14 @@ class Client
      * @return void
      */
     public function __construct(
+        string $use = 'token',
         string $token,
+        string $email = '',
+        string $key = '',
         array $middlewares = []
     ) {
 
-        $this->httpClient = new HttpClient($token, $middlewares);
+        $this->httpClient = new HttpClient($use, $token, $email, $key, $middlewares);
     }
 
     /**
